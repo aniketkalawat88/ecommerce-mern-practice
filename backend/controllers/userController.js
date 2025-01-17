@@ -2,6 +2,9 @@ const ErrorHander = require("../utils/errorHandler");
 const catchAsyncError = require("../middleware/catchAsyncError");
 const User = require("../models/userModel");
 const sendToken = require("../utils/jwtToken");
+const sendEmail = require("../utils/sendEmail");
+
+
 
 // Register a user
 exports.registerUser = catchAsyncError(async (req, res, next) => {
@@ -68,4 +71,54 @@ exports.logout = catchAsyncError(async(req, res , next) => {
         success: true,
         message:"Logged Out Success"
     })
+})
+
+
+// Forget Password
+exports.forgetPassword = catchAsyncError(async(req, res, next) => {
+    const user = await User.findOne({email : req.body.email});   // first hum user searh krenge exist krta hai yaa nhi 
+    if(!user){
+        return next(new ErrorHander("User not found" , 404));
+    }
+
+    // Get Reset Password token
+    const resetToken = user.getResetPasswordToken();   // reset token mil jayega jo humne function bnanya tha schema m getResetPasswordToken naam se
+
+    await user.save({ validateBeforeSave : false});
+
+
+    //mail send krna using nodemailer
+
+    const resetPasswordUrl = `${req.protocol}://${req.get("host")}/api/v1/password/reset/${resetToken}`   // http://localhost/api/v1/password/reset/${resetToken}
+
+    const message = `Your reset Password token :- \n\n ${resetPasswordUrl} \n\nif you are not requested then, please ignored it`
+
+    try{
+        await sendEmail({   // sendEmail mai object pass kr diya 
+            email:user.email,
+            subject: `Ecommerce password recovery`,
+            message,
+
+        })
+        res.status(200).json({
+            success:true,
+            message:`Email sent to ${user.email} successfully`
+        })
+
+    }
+    catch(error){
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpire = undefined;
+
+        await user.save({ validateBeforeSave : false});
+        return next(new ErrorHander(error.message , 500));
+    }
+
+})
+
+
+// Reset Password
+exports.resetPassword = catchAsyncError(async (req ,res , next) => {
+    this.resetPasswordToken = crypto.createHash("sha256").update(resetToken).digest("hex"); 
+    
 })
