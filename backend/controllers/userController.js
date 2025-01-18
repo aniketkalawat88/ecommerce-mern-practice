@@ -147,6 +147,133 @@ exports.resetPassword = catchAsyncError(async (req ,res , next) => {
     await user.save();
 
     sendToken(user ,200 , res)
+})
+
+
+// Get user detail
+exports.getUserDetails = catchAsyncError( async (req ,res, next) => {
+    const user = await User.findById(req.user.id);
+    
+    res.status(200).json({
+        success:true,
+        user
+    })
+})
+    
+// update user password
+exports.updatePassword = catchAsyncError( async (req ,res, next) => {
+    const user = await User.findById(req.user.id).select("+password");
+
+    const isPasswordMatched = await user.comparePassword(req.body.oldPassword);
+
+    if(!isPasswordMatched){
+        return next(new ErrorHander("Old password is incorrect" , 400));
+    }
+
+    if(req.body.newPassword !== req.body.confirmPassword){
+        return next(new ErrorHander("Password does not match" , 400));
+    }
+
+    user.password = req.body.newPassword;
+
+    await user.save()
+    
+    sendToken(user, 200 , res);
+    
+    // res.status(200).json({
+    //     success:true,
+    //     user
+    // })
+
+})
+    
+    
+// update user profile
+exports.updateProfile = catchAsyncError( async (req ,res, next) => {
+    const newUserData = {
+        name: req.body.name,
+        email:req.body.email
+    }
+    
+    // we will add clodinary later
+
+    const user = await User.findByIdAndUpdate(req.user.id , newUserData, {
+        new :true,
+        runValidators : true,
+        useFindAndModify:false
+    });
+    
+    res.status(200).json({
+        success:true,
+        user
+    })
+    // sendToken(user, 200 , res);
+})
+
+
+// get all user ( admin )
+exports.getAllUser = catchAsyncError( async(req ,res , next) => {
+    const users = await User.find();
+
+    res.status(200).json({
+        success:true,
+        users
+    })
+})
+
+// get single user ( admin )
+exports.getSingleUser = catchAsyncError( async(req ,res , next) => {
+    const user = await User.findById(req.params.id);
+
+    if(!user){
+        return next(new ErrorHander(`user doesnot exit with id ${req.params.id} ` , 400));
+    }
+
+    res.status(200).json({
+        success:true,
+        user
+    })
+})
+
+
+// update user Role   --- Admin
+exports.updateUserRole = catchAsyncError( async (req ,res, next) => {
+    const newUserData = {
+        name: req.body.name,
+        email:req.body.email,
+        role:req.body.role
+    }
+    
+    const user = await User.findByIdAndUpdate(req.params.id , newUserData, {
+        new :true,
+        runValidators : true,
+        useFindAndModify:false
+    });
+    
+    res.status(200).json({
+        success:true,
+        user
+    })
+    // sendToken(user, 200 , res);
+})
+
+// delete User  --- Admin
+exports.deleteUser = catchAsyncError( async (req ,res, next) => {
 
     
+    const user = await User.findByIdAndDelete(req.params.id )
+
+    // we will remove clodinary later
+
+    if(!user){
+        return next(new ErrorHander(`User does not exist with id : ${req.params.id}` , 400));
+    }
+
+    // await user.remove();
+    
+    res.status(200).json({
+        success:true,
+        message:"User deleted successfully"
+    })
 })
+
