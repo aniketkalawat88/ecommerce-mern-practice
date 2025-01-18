@@ -2,7 +2,6 @@ const Product = require("../models/productModel");
 const ErrorHander = require("../utils/errorHandler");
 const catchAsyncError = require("../middleware/catchAsyncError");
 const ApiFeatures = require("../utils/apifeatures");
-const { query } = require("express");
 
 // Create Product - Admin
 exports.createProduct = catchAsyncError(async (req, res, next) => {
