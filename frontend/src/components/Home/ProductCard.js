@@ -8,6 +8,7 @@ const ProductCard = ({ product }) => {
     edit: false,
     color: "#5sdfs5",
     activeColor: "tomato",
+    value:product.ratings
   };
   return (
     <Link className="productCard" to={`/product/${product._id}`}>
