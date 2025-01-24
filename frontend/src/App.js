@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadUser } from "./Redux/actions/userActions.js";
 import UserOptions from "./components/layout/Header/UserOptions.js";
 import Profile from "./components/User/Profile.js";
+import ProtectedRoute from "./components/Route/ProtectedRoute.js";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,6 +40,11 @@ function App() {
         <Route path="/products/:id" element={<Products />} />
         <Route path="/search" element={<Search />} />
         <Route path="/account" element={<Profile />} />
+        {/* <ProtectedRoute path="/account" element={<Profile />} /> */}
+        {/* <Route
+          path="/account"
+          element={<ProtectedRoute element={<Profile />} />}
+        /> */}
         <Route path="/login" element={<LoginSignUp />} />
       </Routes>
       <Footer />

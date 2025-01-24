@@ -44,10 +44,10 @@ const LoginSignUp = () => {
       myForm.set("name", name);
       myForm.set("email", email);
       myForm.set("password", password);
-      // if (avatar) myForm.set("avatar", avatar); // Add avatar only if it exists
+      if (avatar) myForm.set("avatar", avatar); // Add avatar only if it exists
   
       // console.log(name); // Debugging: Log form data
-      dispatch(register({name , email , password})); // Pass the FormData object to the action
+      dispatch(register({name , email , password , avatar})); // Pass the FormData object to the action
   };
 
     const registerDataChange = (e) => {

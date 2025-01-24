@@ -29,14 +29,14 @@ export const login = createAsyncThunk(
 );
 
 
-export const register = createAsyncThunk( "register" , async ({name , email , password } , { rejectWithValue}) => {
+export const register = createAsyncThunk( "register" , async ({name , email , password , avatar} , { rejectWithValue}) => {
   try{
     const response = await fetch("http://localhost:4000/api/v1/register" , {
       method:"POST",
       headers : {
         "Content-Type":"application/json"
       },
-      body: JSON.stringify({name , email , password})
+      body: JSON.stringify({name , email , password , avatar})
     })
     if(!response.ok){
       const errorData = await response.json();

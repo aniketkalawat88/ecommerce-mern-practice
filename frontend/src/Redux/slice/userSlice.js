@@ -33,7 +33,7 @@ export const userSlice = createSlice({
       })
       .addCase(register.fulfilled, (state, action) => {
         state.loading = false;
-        state.items.push(action.payload);
+        state.items = action.payload;
         state.isAuthenticated = true;
       })
       .addCase(register.rejected, (state, action) => {
