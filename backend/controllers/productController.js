@@ -18,14 +18,26 @@ exports.createProduct = catchAsyncError(async (req, res, next) => {
 });
 
 // Get all products
-exports.getAllProducts = catchAsyncError(async (req, res) => {
+exports.getAllProducts = catchAsyncError(async (req, res , next) => {
 
   // const products = await Product.find();
   const resultPerPage = 8;
   const productCount = await Product.countDocuments();
 
-  const apiFeature = new ApiFeatures(Product.find() , req.query).search().filter().pagination(resultPerPage)
-  const products = await apiFeature.query; 
+  // const apiFeature = new ApiFeatures(Product.find() , req.query).search().filter().pagination(resultPerPage)
+  // const products = await apiFeature.query; 
+  
+    const apiFeature = new ApiFeatures(Product.find() , req.query).search().filter()
+    let products = await apiFeature.query; 
+
+    const filteredProductsCount = products.length;
+    const paginatedApiFeature = new ApiFeatures(Product.find(), req.query)
+      .search()
+      .filter()
+      .pagination(resultPerPage);
+
+    products = await paginatedApiFeature.query;
+
 
   res
     .status(200)
@@ -34,8 +46,29 @@ exports.getAllProducts = catchAsyncError(async (req, res) => {
         success: true,
         products ,
         productCount,
-        resultPerPage
+        resultPerPage,
+        filteredProductsCount
      });
+  // const apiFeature = new ApiFeatures(Product.find() , req.query).search().filter()
+
+  // let products = await apiFeature.query ;
+
+  // let filteredProductsCount = products.length;
+
+  // apiFeature.pagination(resultPerPage)
+  
+  // products = await apiFeature.query; 
+
+  // res
+  //   .status(200)
+  //   .json({ 
+  //       msg:"All products fetched successfully",
+  //       success: true,
+  //       products ,
+  //       productCount,
+  //       resultPerPage,
+  //       filteredProductsCount
+  //    });
 });
 
 // get single product details

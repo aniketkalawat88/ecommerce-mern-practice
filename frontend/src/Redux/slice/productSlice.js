@@ -18,6 +18,7 @@ const productSlice = createSlice({
       .addCase(getProducts.fulfilled, (state, action) => {
         state.loading = false;
         state.items = action.payload;
+        state.filteredProductsCount = action.payload.filteredProductsCount
       })
       .addCase(getProducts.rejected, (state, action) => {
         state.loading = false;
@@ -55,4 +56,3 @@ const productSlice = createSlice({
 
 
 export default productSlice.reducer;
-// export const productDetailReducer = productDetailSlice.reducer;
