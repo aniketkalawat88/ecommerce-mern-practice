@@ -39,15 +39,16 @@ const LoginSignUp = () => {
     }
     
     const registerSubmit = (e) => {
-        e.preventDefault();
-        const myForm = new FormData();
-        myForm.set("name" , name);
-        myForm.set("email" , email);
-        myForm.set("password" , password);
-        myForm.set("avatar" , avatar);
-        console.log(myForm,"myForm")
-        // dispatch(register({name:name , email:email , password:password , avatar:avatar}))
-    }
+      e.preventDefault();
+      const myForm = new FormData();
+      myForm.set("name", name);
+      myForm.set("email", email);
+      myForm.set("password", password);
+      // if (avatar) myForm.set("avatar", avatar); // Add avatar only if it exists
+  
+      // console.log(name); // Debugging: Log form data
+      dispatch(register({name , email , password})); // Pass the FormData object to the action
+  };
 
     const registerDataChange = (e) => {
         if(e.target.name === "avatar"){
@@ -75,7 +76,8 @@ const LoginSignUp = () => {
             return alert(error)
         }
         if(isAuthenticated){
-          navigate("/account")
+          // console.log(isAuthenticated)
+          navigate("/login")
         }
 
       }, [error , isAuthenticated , navigate])

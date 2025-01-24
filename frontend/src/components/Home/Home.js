@@ -15,7 +15,7 @@ import Loader from "../layout/Loader/Loader";
 const Home = () => {
   const dispatch = useDispatch();
   const { items, loading, error } = useSelector((state) => state.products);
-  console.log("items ", items);
+  // console.log("items ", items);
   useEffect(() => {
     if (error) {
       console.log(error);

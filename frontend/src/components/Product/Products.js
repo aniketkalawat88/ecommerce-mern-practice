@@ -32,7 +32,7 @@ const Products = () => {
   );
   const keyword = id;
 
-  console.log(items);
+  // console.log(items);
   const setCurrentPageNo = (e) => {
     setCurrentPage(e);
   };
