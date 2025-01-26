@@ -77,7 +77,7 @@ const LoginSignUp = () => {
         }
         if(isAuthenticated){
           // console.log(isAuthenticated)
-          navigate("/login")
+          navigate("/account")
         }
 
       }, [error , isAuthenticated , navigate])

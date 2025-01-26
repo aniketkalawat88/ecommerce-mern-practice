@@ -14,6 +14,7 @@ import { loadUser } from "./Redux/actions/userActions.js";
 import UserOptions from "./components/layout/Header/UserOptions.js";
 import Profile from "./components/User/Profile.js";
 import ProtectedRoute from "./components/Route/ProtectedRoute.js";
+import UpdateProfile from "./components/User/UpdateProfile.js";
 
 function App() {
   const dispatch = useDispatch();
@@ -30,21 +31,23 @@ function App() {
   return (
     <div className="App">
       <Header />
-        {
-          isAuthenticated && <UserOptions user={items} />
-        }
+      {isAuthenticated && <UserOptions user={items} />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<Products />} />
         <Route path="/search" element={<Search />} />
-        <Route path="/account" element={<Profile />} />
+        {/* <Route path="/account" element={<Profile />} /> */}
         {/* <ProtectedRoute path="/account" element={<Profile />} /> */}
-        {/* <Route
+        <Route
           path="/account"
           element={<ProtectedRoute element={<Profile />} />}
-        /> */}
+        />
+        <Route
+          path="/me/update"
+          element={<ProtectedRoute element={<UpdateProfile />} />}
+        />
         <Route path="/login" element={<LoginSignUp />} />
       </Routes>
       <Footer />

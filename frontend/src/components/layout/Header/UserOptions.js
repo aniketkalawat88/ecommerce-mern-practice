@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../Redux/actions/userActions";
 import Backdrop from '@mui/material/Backdrop';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
 
 
 const UserOptions = ({ user }) => {
@@ -19,6 +20,7 @@ const UserOptions = ({ user }) => {
   const options = [
     { icon: <ListAltIcon />, name: "Orders", func: orders },
     { icon: <PersonIcon />, name: "Profile", func: account },
+    { icon: <LockOpenIcon />, name: "Login", func: loginUser },
     { icon: <ExitToAppIcon />, name: "Logout", func: logoutUser },
   ];
 
@@ -40,6 +42,9 @@ const UserOptions = ({ user }) => {
 
   function account(){
     navigate("/account")
+  }
+  function loginUser(){
+    navigate("/login")
   }
 
   function logoutUser(){

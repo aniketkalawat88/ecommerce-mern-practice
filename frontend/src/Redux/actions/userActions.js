@@ -85,3 +85,30 @@ export const logout = createAsyncThunk("logout", async( args , { rejectWithValue
     
   }
 })
+
+
+// Update Profile
+export const updateProfile = createAsyncThunk( "updateProfile" , async ({name , email , avatar} , { rejectWithValue}) => {
+  try{
+    const response = await fetch("http://localhost:4000/api/v1/me/update" , {
+      method:"PUT",
+      headers : {
+        "Content-Type":"application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({name , email , avatar})
+    })
+    if(!response.ok){
+      const errorData = await response.json();
+      return rejectWithValue(errorData.message || "Failed to login");
+    }
+
+    const result = await response.json();
+    console.log(result , "profile Update succesfully")
+
+  }
+  catch(error){
+    console.error("Login Error:", error);
+    return rejectWithValue(error.message || "Network Error");
+  }
+})

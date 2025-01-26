@@ -15,7 +15,6 @@ export const userSlice = createSlice({
       .addCase(login.pending, (state) => {
         state.loading = true;
         state.error = null;
-        // state.isAuthenticated = false;
       })
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
@@ -52,8 +51,8 @@ export const userSlice = createSlice({
       .addCase(loadUser.rejected, (state, action) => {
         state.loading = false;
         state.items = null;
-        state.isAuthenticated = false;
         state.error = action.payload;
+        state.isAuthenticated = false;
       })
       .addCase(logout.pending, (state) => {
         state.loading = true;
@@ -61,15 +60,15 @@ export const userSlice = createSlice({
       })
       .addCase(logout.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload;
-        state.error = null;
+        state.items = null;
         state.isAuthenticated = false;
-    })
-    .addCase(logout.rejected, (state, action) => {
+        state.error = null;
+      })
+      .addCase(logout.rejected, (state, action) => {
         state.loading = false;
         state.items = null;
         state.isAuthenticated = false;
         state.error = action.payload;
-      });
+      })
   },
 });
