@@ -108,7 +108,34 @@ export const updateProfile = createAsyncThunk( "updateProfile" , async ({name , 
 
   }
   catch(error){
-    console.error("Login Error:", error);
+    console.error("Update profile error:", error);
+    return rejectWithValue(error.message || "Network Error");
+  }
+})
+
+
+// updatePassword
+export const updatePassword = createAsyncThunk( "updatePassword" , async ({oldPassword , newPassword , confirmPassword} , {rejectWithValue}) => {
+  try{
+    const response = await fetch("http://localhost:4000/api/v1/password/update" , {
+      method:"PUT",
+      credentials:"include",
+      headers:{
+        "Content-Type" : "application/json",
+      },
+      body: JSON.stringify({oldPassword , newPassword , confirmPassword})
+    })
+    if(!response.ok){
+      const errorData = await response.json();
+      return rejectWithValue(errorData.message || "Failed to updatePassword");
+    }
+
+    const result = await response.json();
+    console.log(result , "Update Password succesfully")
+
+  }
+  catch(error){
+    console.error("Update passwprd error:", error);
     return rejectWithValue(error.message || "Network Error");
   }
 })

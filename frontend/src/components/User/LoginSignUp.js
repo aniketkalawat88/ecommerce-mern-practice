@@ -13,7 +13,7 @@ const LoginSignUp = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { loading , error , isAuthenticated} = useSelector((state) => state.user)
+    const { loading , error , isAuthenticated , items} = useSelector((state) => state.user)
 
     const loginTab = useRef(null);
     const registerTab = useRef(null);
@@ -75,12 +75,12 @@ const LoginSignUp = () => {
             console.log("login error " , error)
             return alert(error)
         }
-        if(isAuthenticated){
+        if(items?.success){
           // console.log(isAuthenticated)
           navigate("/account")
         }
 
-      }, [error , isAuthenticated , navigate])
+      }, [error, items?.success, navigate])
 
     const switchTabs = (e, tab) => {
         if (tab === "login") {

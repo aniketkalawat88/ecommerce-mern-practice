@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { updateProfile } from "../actions/userActions";
+import { updatePassword, updateProfile } from "../actions/userActions";
 
 export const profileSlice = createSlice({
   name: "profile",
@@ -28,3 +28,32 @@ export const profileSlice = createSlice({
       });
   },
 });
+
+export const forgotPasswordSlice = createSlice({
+  name:"profile",
+  initialState: {
+    profile:[],
+    loading:false,
+    error:null,
+    isAuthenticated: false,
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+    .addCase(updatePassword.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    })
+    .addCase(updatePassword.fulfilled, (state, action) => {
+      state.loading = false;
+      state.profile = action.payload;
+      state.isAuthenticated = true;
+    })
+    .addCase(updatePassword.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+      state.isAuthenticated = false;
+    });
+  }
+
+})

@@ -18,7 +18,8 @@ const UpdateProfile = () => {
 
   const { items } = useSelector((state) => state.user);
   const { profile, error, loading } = useSelector((state) => state.profile);
-  console.log(items.user.name, "dfghujk");
+  // console.log(items.user.name, "dfghujk");
+  
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -60,12 +61,11 @@ const UpdateProfile = () => {
       console.log(error, "fghnm");
       return alert(error);
     }
+    if (profile) {
+          dispatch(loadUser());
 
-    // if (profile) {
-        //   dispatch(loadUser());
-
-    //   navigate("/account");
-    // }
+      navigate("/account");
+    }
   }, [dispatch, error, items, navigate, profile]);
 
   return (

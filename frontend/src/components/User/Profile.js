@@ -7,14 +7,14 @@ import "./Profile.css";
 
 const Profile = () => {
   const navigate = useNavigate();
-  const { items, loading, isAuthenticated } = useSelector((state) => state.user);
+  const { items, loading } = useSelector((state) => state.user);
 
-  console.log(isAuthenticated,"dfghjk")
+  // console.log(items?.success,"dfghjk")
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!items?.success) {
       navigate("/login");
     }
-  }, [isAuthenticated , navigate]);
+  }, [items?.success, navigate]);
   return (
     <Fragment>
       {loading ? (

@@ -15,10 +15,12 @@ import UserOptions from "./components/layout/Header/UserOptions.js";
 import Profile from "./components/User/Profile.js";
 import ProtectedRoute from "./components/Route/ProtectedRoute.js";
 import UpdateProfile from "./components/User/UpdateProfile.js";
+import UpdatePassword from "./components/User/UpdatePassword.js";
 
 function App() {
   const dispatch = useDispatch();
   const { isAuthenticated, items } = useSelector((state) => state.user);
+  // console.log(items.success,"234567")
 
   useEffect(() => {
     WebFont.load({
@@ -48,6 +50,8 @@ function App() {
           path="/me/update"
           element={<ProtectedRoute element={<UpdateProfile />} />}
         />
+
+        <Route path="/password/update" element={<UpdatePassword />} />
         <Route path="/login" element={<LoginSignUp />} />
       </Routes>
       <Footer />
