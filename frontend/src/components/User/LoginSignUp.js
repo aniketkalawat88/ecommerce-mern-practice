@@ -13,7 +13,7 @@ const LoginSignUp = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { loading , error , isAuthenticated , items} = useSelector((state) => state.user)
+    const { loading , error  , items} = useSelector((state) => state.user)
 
     const loginTab = useRef(null);
     const registerTab = useRef(null);

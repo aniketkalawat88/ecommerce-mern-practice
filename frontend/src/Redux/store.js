@@ -4,6 +4,8 @@ import { userSlice } from "./slice/userSlice";
 import { forgotPasswordSlice, profileSlice } from "./slice/profileSlice";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
+import { cartSlice } from "./slice/cartSlice";
+import { newOrderSlice } from "./slice/orderSlice";
 
 const persistConfig = {
   key: "root",
@@ -16,6 +18,8 @@ const rootReducer = combineReducers({
     user: userSlice.reducer,
     profile: profileSlice.reducer,
     updatePassword : forgotPasswordSlice.reducer,
+    cart: cartSlice.reducer,
+    newOrder: newOrderSlice.reducer,
   })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -4,6 +4,9 @@ const cookieParser = require("cookie-parser")
 const cors = require("cors")
 const bodyParser = require("body-parser")
 const fileUpload = require("express-fileupload")
+const dotenv = require('dotenv');
+dotenv.config();
+
 
 
 // app.use(cors())
@@ -27,10 +30,12 @@ app.use(express.urlencoded({ limit: "10mb", extended: true }));
 const product = require('./routes/productRoute');
 const user = require('./routes/userRoute');
 const order = require('./routes/orderRoute')
+const payment = require('./routes/paymentRoute')
 
 app.use("/api/v1", product)
 app.use("/api/v1", user)
 app.use("/api/v1", order)
+app.use("/api/v1", payment)
 
 
 

@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../../Redux/actions/userActions";
 import Backdrop from '@mui/material/Backdrop';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 
 const UserOptions = ({ user }) => {
@@ -21,6 +22,7 @@ const UserOptions = ({ user }) => {
     { icon: <ListAltIcon />, name: "Orders", func: orders },
     { icon: <PersonIcon />, name: "Profile", func: account },
     { icon: <LockOpenIcon />, name: "Login", func: loginUser },
+    { icon: <ShoppingCartIcon />, name: "Cart", func: Cart },
     { icon: <ExitToAppIcon />, name: "Logout", func: logoutUser },
   ];
 
@@ -46,9 +48,11 @@ const UserOptions = ({ user }) => {
   function loginUser(){
     navigate("/login")
   }
+  function Cart(){
+    navigate("/cart")
+  }
 
   function logoutUser(){
-    // navigate("/logoutUser")
     dispatch(logout())
     alert("Logout Successfully")
   }

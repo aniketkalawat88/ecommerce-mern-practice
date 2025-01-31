@@ -6,7 +6,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  loadUser,
+  // loadUser,
   updateProfile,
 } from "../../Redux/actions/userActions";
 import Loader from "../layout/Loader/Loader";
@@ -61,11 +61,11 @@ const UpdateProfile = () => {
       console.log(error, "fghnm");
       return alert(error);
     }
-    if (profile) {
-          dispatch(loadUser());
+    // if (profile) {
+    //       dispatch(loadUser());
 
-      navigate("/account");
-    }
+    //   navigate("/account");
+    // }
   }, [dispatch, error, items, navigate, profile]);
 
   return (
