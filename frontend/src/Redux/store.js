@@ -1,11 +1,11 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import productSlice, { productDetailSlice } from "./slice/productSlice";
+import productSlice, { newReviewSlice, productDetailSlice } from "./slice/productSlice";
 import { userSlice } from "./slice/userSlice";
 import { forgotPasswordSlice, profileSlice } from "./slice/profileSlice";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 import { cartSlice } from "./slice/cartSlice";
-import { newOrderSlice } from "./slice/orderSlice";
+import { myOrderSlice, newOrderSlice, orderDetailSlice } from "./slice/orderSlice";
 
 const persistConfig = {
   key: "root",
@@ -20,6 +20,9 @@ const rootReducer = combineReducers({
     updatePassword : forgotPasswordSlice.reducer,
     cart: cartSlice.reducer,
     newOrder: newOrderSlice.reducer,
+    myOrder : myOrderSlice.reducer,
+    orderDetails : orderDetailSlice.reducer,
+    newReview: newReviewSlice.reducer
   })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

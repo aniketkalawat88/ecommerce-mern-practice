@@ -28,6 +28,8 @@ export const getProducts = createAsyncThunk("getProducts" , async ( {keyword="" 
     }
 })
 
+
+// Get Product Details
 export const getProductDetails = createAsyncThunk("getProductDetails" , async ( id , { rejectWithValue }) => {
     const response = await fetch(`http://localhost:4000/api/v1/product/${id}`);
     try {
@@ -35,6 +37,28 @@ export const getProductDetails = createAsyncThunk("getProductDetails" , async ( 
         // console.log(result.product,"ertyui")
         return result.product;
     } catch (error) {
+        return rejectWithValue(error)
+    }
+})
+
+
+// New Review
+export const newReview = createAsyncThunk("newReview" , async ( {rating, comment ,productId} , {rejectWithValue}) => {
+    const config = {
+        method:"PUT",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        credentials: "include",
+        body: JSON.stringify({ rating, comment, productId }), // Corrected
+    };
+    try {
+        const response = await fetch("http://localhost:4000/api/v1/review" ,config);
+        const result = await response.json();
+        // console.log(result,"ertyui")
+        return result;
+    } catch (error) {
+        console.log(error,"error hai")
         return rejectWithValue(error)
     }
 })

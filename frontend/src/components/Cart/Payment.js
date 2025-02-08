@@ -19,7 +19,7 @@ const Payment = ({ history }) => {
   const payBtn = useRef(null);
 
   const { shippingInfo, cartItems } = useSelector((state) => state.cart);
-  const { user } = useSelector((state) => state.user);
+  // const { user } = useSelector((state) => state.user);
   const { error } = useSelector((state) => state.newOrder);
 
   const order = {

@@ -1,13 +1,21 @@
 import React, { Fragment, useEffect, useState } from "react";
 import Carousel from "react-material-ui-carousel";
 import "./ProductDetails.css";
-import { getProductDetails } from "../../Redux/actions/productActions";
+import { getProductDetails, newReview } from "../../Redux/actions/productActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import ReviewCard from "./ReviewCard";
 import Loader from "../layout/Loader/Loader";
 import ReactStars from "react-rating-stars-component";
 import { addItemsToCart } from "../../Redux/actions/cartAction";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Button,
+  Rating,
+} from "@mui/material";
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -17,6 +25,10 @@ const ProductDetails = () => {
   );
 
   const [quantity, setQuantity] = useState(1);
+  
+  const [open, setOpen] = useState(false);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
 
   const options = {
     size: "large",
@@ -26,7 +38,7 @@ const ProductDetails = () => {
   };
 
   const increaseQuantity = () => {
-    if (items?.stock <= quantity) return;
+    if (items?.Stock <= quantity) return;
     setQuantity(quantity + 1);
   };
 
@@ -38,6 +50,22 @@ const ProductDetails = () => {
   const addToCartHandler = () => {
     dispatch(addItemsToCart({ id, quantity }));
     alert("Item Added To Cart");
+  };
+
+  const submitReviewToggle = () => {
+    open ? setOpen(false) : setOpen(true);
+  };
+
+  const reviewSubmitHandler = () => {
+    // const myForm = new FormData();
+
+    // myForm.set("rating", rating);
+    // myForm.set("comment", comment);
+    // myForm.set("productId", match.params.id);
+
+    dispatch(newReview({rating, comment , productId:id}));
+
+    setOpen(false);
   };
 
   useEffect(() => {
@@ -92,7 +120,7 @@ const ProductDetails = () => {
                     <button onClick={increaseQuantity}>+</button>
                   </div>
                   <button
-                    disabled={items?.stock < 1}
+                    disabled={items?.Stock < 1 ? true : false}
                     onClick={addToCartHandler}
                   >
                     Add to Cart
@@ -104,10 +132,10 @@ const ProductDetails = () => {
                   Status:{" "}
                   <b
                     className={
-                      items?.stock < 1 ? "redColor" : "greenColor"
+                      items?.Stock < 1 ? "redColor" : "greenColor"
                     }
                   >
-                    {items?.stock < 1 ? "OutOfStock" : "InStock"}
+                    {items?.Stock < 1 ? "OutOfStock" : "InStock"}
                   </b>
                 </p>
               </div>
@@ -117,12 +145,45 @@ const ProductDetails = () => {
                 Description: <p>{items?.description}</p>
               </div>
 
-              <button className="submitReview">Submit Review</button>
+              <button className="submitReview" onClick={submitReviewToggle} >Submit Review</button>
             </div>
           </div>
 
           {/* Reviews Section */}
           <h3 className="reviewsHeading">REVIEWS</h3>
+          
+          <Dialog
+            aria-labelledby="simple-dialog-title"
+            open={open}
+            onClose={submitReviewToggle}
+          >
+            <DialogTitle>Submit Review</DialogTitle>
+            <DialogContent className="submitDialog">
+              <Rating
+                onChange={(e) => setRating(e.target.value)}
+                value={rating}
+                size="large"
+              />
+
+              <textarea
+                className="submitDialogTextArea"
+                cols="30"
+                rows="5"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+              ></textarea>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={submitReviewToggle} color="secondary">
+                Cancel
+              </Button>
+              <Button onClick={reviewSubmitHandler} color="primary">
+                Submit
+              </Button>
+            </DialogActions>
+          </Dialog>
+
+
           {items?.reviews && items.reviews[0] ? (
             <div className="reviews">
               {items.reviews.map((review) => (
@@ -266,16 +327,16 @@ export default ProductDetails;
 
 //           <h3 className="reviewsHeading">REVIEWS</h3>
 
-//           {items.reviews && items.reviews[0] ? (
-//             <div className="reviews">
-//               {items.reviews &&
-//                 items.reviews.map((review) => (
-//                   <ReviewCard key={review._id} review={review} />
-//                 ))}
-//             </div>
-//           ) : (
-//             <p className="noReviews">No Reviews Yet</p>
-//           )}
+          // {items.reviews && items.reviews[0] ? (
+          //   <div className="reviews">
+          //     {items.reviews &&
+          //       items.reviews.map((review) => (
+          //         <ReviewCard key={review._id} review={review} />
+          //       ))}
+          //   </div>
+          // ) : (
+          //   <p className="noReviews">No Reviews Yet</p>
+          // )}
 //         </Fragment>
 //       )}
 //     </Fragment>

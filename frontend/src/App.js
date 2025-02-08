@@ -21,6 +21,8 @@ import Shipping from "./components/Cart/Shipping.js";
 import ConfirmOrder from "./components/Cart/ConfirmOrder.js";
 import Payment from "./components/Cart/Payment.js";
 import OrderSuccess from "./components/Cart/OrderSuccess.js";
+import MyOrders from "./components/Order/MyOrders.js";
+import OrderDetails from "./components/Order/OrderDetails.js";
 
 function App() {
   const dispatch = useDispatch();
@@ -78,6 +80,8 @@ function App() {
 
         {/* </Element> */}
           <Route path="/success" element={<OrderSuccess />} />
+          <Route path="/orders" element={<MyOrders />} />
+          <Route path="/order/:id" element={<OrderDetails />} />
 
       </Routes>
       <Footer />
