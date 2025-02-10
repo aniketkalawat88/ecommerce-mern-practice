@@ -12,7 +12,7 @@ exports.createProduct = catchAsyncError(async (req, res, next) => {
   const product = await Product.create(req.body);
   
   res.status(201).json({
-    status: "success",
+    success: true,
     product,
   });
 });
@@ -70,6 +70,16 @@ exports.getAllProducts = catchAsyncError(async (req, res , next) => {
   //       filteredProductsCount
   //    });
 });
+
+// Get All products (Admin)
+exports.getAdminProducts = catchAsyncError(async (req ,res, next) => {
+  const products = await Product.find();
+  res.status(200).json({
+    success:true,
+    message:"All Product Fetch Successfully",
+    products
+  })
+})
 
 // get single product details
 exports.getProductDetails = catchAsyncError(async (req, res , next) => {

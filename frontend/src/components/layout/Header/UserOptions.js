@@ -35,7 +35,7 @@ const UserOptions = ({ user }) => {
   }
 
   function dashboard(){
-    navigate("/dashboard")
+    navigate("/admin/dashboard")
   }
 
   function orders(){
@@ -72,7 +72,7 @@ const UserOptions = ({ user }) => {
         icon={
           <img
             className="speedDialIcon"
-            src={user?.user?.avatar?.public_id ? "/Profile.png" : "/Profile.png"}
+            src={user?.user?.avatar?.public_id ? user?.user?.avatar.url : "/Profile.png"}
             alt="Profile"
           />
         }

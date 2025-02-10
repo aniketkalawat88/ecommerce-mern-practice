@@ -23,6 +23,11 @@ import Payment from "./components/Cart/Payment.js";
 import OrderSuccess from "./components/Cart/OrderSuccess.js";
 import MyOrders from "./components/Order/MyOrders.js";
 import OrderDetails from "./components/Order/OrderDetails.js";
+import Dashboard from "./components/admin/Dashboard.js";
+import ProductList from "./components/admin/ProductList.js";
+import NewProduct from "./components/admin/NewProduct.js";
+import UpdateProduct from "./components/admin/UpdateProduct.js";
+import OrderList from "./components/admin/OrderList.js";
 
 function App() {
   const dispatch = useDispatch();
@@ -82,6 +87,11 @@ function App() {
           <Route path="/success" element={<OrderSuccess />} />
           <Route path="/orders" element={<MyOrders />} />
           <Route path="/order/:id" element={<OrderDetails />} />
+          <Route path="/admin/dashboard" element={<Dashboard />} />
+          <Route path="/admin/products" element={<ProductList />} />
+          <Route path="/admin/product" element={<NewProduct />} />
+          <Route path="/admin/product/:id" element={<UpdateProduct />} />
+          <Route path="/admin/orders" element={<OrderList />} />
 
       </Routes>
       <Footer />

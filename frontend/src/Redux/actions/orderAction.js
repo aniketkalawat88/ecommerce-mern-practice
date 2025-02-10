@@ -26,6 +26,7 @@ export const createOrder = createAsyncThunk(
   }
 );
 
+// My Orders
 export const myOrder = createAsyncThunk( "myOrder", async ( args, { rejectWithValue }) => {
     try {
       const data = await axios.get("http://localhost:4000/api/v1/orders/me" , {
@@ -39,6 +40,23 @@ export const myOrder = createAsyncThunk( "myOrder", async ( args, { rejectWithVa
       return rejectWithValue(error.response?.data?.message || "Order creation failed");
     }
   }
+);
+
+
+// Get All Orders (Admin)
+export const getAllOrders = createAsyncThunk( "myOrder", async ( args, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.get("http://localhost:4000/api/v1/admin/orders" , {
+      withCredentials: true
+    });
+    // console.log(data.orders,"drtyuji")
+    
+    return data.orders; 
+  } catch (error) {
+    console.log(error,"my order error ")
+    return rejectWithValue(error.response?.data?.message || "Order creation failed");
+  }
+}
 );
 
 

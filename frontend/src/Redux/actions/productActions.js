@@ -2,13 +2,13 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 // export const getProducts = createAsyncThunk("getProducts" , async ( args , {rejectWithValue}) => {
 //     const response = await fetch("http://localhost:4000/api/v1/products")
-//     try{
-//         const result = await response.json();
-//         // console.log(result.products)
-//         return result;
-//     }catch(error){
-//         return rejectWithValue(error)
-//     }
+    // try{
+    //     const result = await response.json();
+    //     // console.log(result.products)
+    //     return result;
+    // }catch(error){
+    //     return rejectWithValue(error)
+    // }
 // })
 
 
@@ -28,6 +28,78 @@ export const getProducts = createAsyncThunk("getProducts" , async ( {keyword="" 
     }
 })
 
+// Get All Product for Admin
+export const getAdminProduct = createAsyncThunk("getAdminProduct" , async(args , {rejectWithValue}) => {
+    const response = await fetch("http://localhost:4000/api/v1/admin/products", {
+        credentials: "include",
+    })
+    try{
+        const result = await response.json();
+        // console.log(result.products)
+        return result;
+    }catch(error){
+        return rejectWithValue(error)
+    }
+})
+
+// Create Product
+export const createProduct = createAsyncThunk("newReview" , async ( myForm , {rejectWithValue}) => {
+    const config = {
+        method: "POST",
+        credentials: "include", 
+        body: myForm,
+      };
+    try {
+        const response = await fetch("http://localhost:4000/api/v1/admin/product/new" ,config);
+        const result = await response.json();
+        // console.log(result,"ertyui")
+        return result;
+    } catch (error) {
+        console.log(error,"error hai")
+        return rejectWithValue(error)
+    }
+})
+
+// Delete Product
+export const deleteProduct = createAsyncThunk("newReview" , async ( id , {rejectWithValue}) => {
+    const config = {
+        method: "DELETE",
+        credentials: "include", 
+        headers: {
+            "Content-Type": "application/json"
+        }
+      };
+    try {
+        const response = await fetch(`http://localhost:4000/api/v1/admin/product/${id}` ,config);
+        const result = await response.json();
+        // console.log(result,"delete success")
+        return result;
+    } catch (error) {
+        console.log(error,"error hai")
+        return rejectWithValue(error)
+    }
+})
+
+// Update Product
+export const updateProduct = createAsyncThunk("updateProduct", async ({ id, myForm }, { rejectWithValue }) => {
+    try {
+        const response = await fetch(`http://localhost:4000/api/v1/admin/product/${id}`, {
+            method: "PUT",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(myForm) 
+        });
+        const result = await response.json();
+        console.log(result)
+        return result;
+    } catch (error) {
+        console.error("Update Error:", error);
+        return rejectWithValue(error);
+    }
+});
+
 
 // Get Product Details
 export const getProductDetails = createAsyncThunk("getProductDetails" , async ( id , { rejectWithValue }) => {
@@ -40,7 +112,6 @@ export const getProductDetails = createAsyncThunk("getProductDetails" , async ( 
         return rejectWithValue(error)
     }
 })
-
 
 // New Review
 export const newReview = createAsyncThunk("newReview" , async ( {rating, comment ,productId} , {rejectWithValue}) => {
