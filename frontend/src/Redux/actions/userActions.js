@@ -139,3 +139,78 @@ export const updatePassword = createAsyncThunk( "updatePassword" , async ({oldPa
     return rejectWithValue(error.message || "Network Error");
   }
 })
+
+
+export const getAllUsers = createAsyncThunk( "getAllUsers", async (args, { rejectWithValue }) => {
+  try {
+    const response = await fetch("http://localhost:4000/api/v1/admin/users", {
+      method: "GET",
+      credentials: "include", // Include cookies in the request
+    });
+
+    const result = await response.json();
+    // console.log(result,"dsdsfd")
+    return result.users;
+  } catch (error) {
+    return rejectWithValue(error.message || "Network Error");
+  }
+}
+);
+
+// Get all user Details
+export const getUserDetails = createAsyncThunk( "getUserDetails", async (id, { rejectWithValue }) => {
+  try {
+    const response = await fetch(`http://localhost:4000/api/v1/admin/users/${id}`, {
+      method: "GET",
+      credentials: "include", // Include cookies in the request
+    });
+
+    const result = await response.json();
+    // console.log(result,"dsdsfd")
+    return result.user;
+  } catch (error) {
+    return rejectWithValue(error.message || "Network Error");
+  }
+}
+);
+
+// Delete User
+export const deleteUser = createAsyncThunk("deleteUser" , async ( id , {rejectWithValue}) => {
+  const config = {
+      method: "DELETE",
+      credentials: "include", 
+      headers: {
+          "Content-Type": "application/json"
+      }
+    };
+  try {
+      const response = await fetch(`http://localhost:4000/api/v1/admin/users/${id}` ,config);
+      const result = await response.json();
+      // console.log(result,"delete success")
+      return result;
+  } catch (error) {
+      console.log(error,"error hai")
+      return rejectWithValue(error)
+  }
+})
+
+// Update User
+export const updateUser = createAsyncThunk("updateUser" , async ( {id , myForm} , {rejectWithValue}) => {
+  const config = {
+      method: "PUT",
+      credentials: "include", 
+      headers: {
+          "Content-Type": "application/json"
+      },
+      body: JSON.stringify(myForm)
+    };
+  try {
+      const response = await fetch(`http://localhost:4000/api/v1/admin/users/${id}` ,config);
+      const result = await response.json();
+      console.log(result,"Update success")
+      return result;
+  } catch (error) {
+      console.log(error,"error hai")
+      return rejectWithValue(error)
+  }
+})

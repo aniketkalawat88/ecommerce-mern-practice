@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import productSlice, { newProductSlice, newReviewSlice, productDetailSlice } from "./slice/productSlice";
-import { userSlice } from "./slice/userSlice";
+import { allUserSlice, getUserSlice, userSlice } from "./slice/userSlice";
 import { forgotPasswordSlice, profileSlice } from "./slice/profileSlice";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
@@ -24,7 +24,10 @@ const rootReducer = combineReducers({
     orderDetails : orderDetailSlice.reducer,
     newReview: newReviewSlice.reducer,
     newProduct : newProductSlice.reducer,
-    order: orderSlice.reducer
+    order: orderSlice.reducer,
+    allUsers:allUserSlice.reducer,
+    getUser:getUserSlice.reducer,
+    
   })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

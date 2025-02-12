@@ -30,7 +30,7 @@ export const profileSlice = createSlice({
 });
 
 export const forgotPasswordSlice = createSlice({
-  name:"profile",
+  name:"forgetpassword",
   initialState: {
     profile:[],
     loading:false,

@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+// Create Order
 export const createOrder = createAsyncThunk(
   "createOrder",
   async (order, { rejectWithValue }) => {
@@ -18,6 +19,57 @@ export const createOrder = createAsyncThunk(
         config
       );
     //   console.log(data)
+
+      return data; 
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || "Order creation failed");
+    }
+  }
+);
+
+// Update Order
+export const updateOrder = createAsyncThunk(
+  "updateOrder",
+  async ({order,id}, { rejectWithValue }) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true, // Ensures cookies are sent if required
+      };
+
+      const { data } = await axios.put(
+        `http://localhost:4000/api/v1/admin/order/${id}`,
+        order,
+        config
+      );
+      // console.log(data , "sdfghjk")
+
+      return data; 
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || "Order creation failed");
+    }
+  }
+);
+
+// Delete Order
+export const deleteOrder = createAsyncThunk(
+  "createOrder",
+  async (id, { rejectWithValue }) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true, // Ensures cookies are sent if required
+      };
+
+      const { data } = await axios.delete(
+        `http://localhost:4000/api/v1/admin/order/${id}`,
+        config
+      );
+      console.log(data)
 
       return data; 
     } catch (error) {

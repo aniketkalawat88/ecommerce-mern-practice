@@ -7,9 +7,8 @@ import MetaData from "../layout/MetaData";
 import SideBar from "./SideBar";
 import { DataGrid } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProduct } from "../../Redux/actions/productActions";
 import "./productlist.css";
-import { getAllOrders } from "../../Redux/actions/orderAction";
+import { deleteOrder, getAllOrders } from "../../Redux/actions/orderAction";
 
 const OrderList = () => {
   const dispatch = useDispatch();
@@ -17,7 +16,7 @@ const OrderList = () => {
   // console.log(order,"fghjk")
 
   const deleteProductHandler = (id) => {
-    dispatch(deleteProduct(id));
+    dispatch(deleteOrder(id));
     alert("Deleted Succesfully");
   };
   useEffect(() => {

@@ -28,6 +28,9 @@ import ProductList from "./components/admin/ProductList.js";
 import NewProduct from "./components/admin/NewProduct.js";
 import UpdateProduct from "./components/admin/UpdateProduct.js";
 import OrderList from "./components/admin/OrderList.js";
+import ProcessOrder from "./components/admin/ProcessOrder.js";
+import UserList from "./components/admin/UserList.js";
+import UpdateUser from "./components/admin/UpdateUser.js";
 
 function App() {
   const dispatch = useDispatch();
@@ -92,6 +95,9 @@ function App() {
           <Route path="/admin/product" element={<NewProduct />} />
           <Route path="/admin/product/:id" element={<UpdateProduct />} />
           <Route path="/admin/orders" element={<OrderList />} />
+          <Route path="/admin/order/:id" element={<ProcessOrder />} />
+          <Route path="/admin/users" element={<UserList />} />
+          <Route path="/admin/user/:id" element={<UpdateUser />} />
 
       </Routes>
       <Footer />
