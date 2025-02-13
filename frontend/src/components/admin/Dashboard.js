@@ -53,6 +53,13 @@ const Dashboard = () => {
     dispatch(getAllOrders());
   }, [dispatch]);
 
+  let totalAmount = 0;
+  order &&
+    order.forEach((item) => {
+      totalAmount += item.totalPrice;
+    });
+
+
   const lineState = {
     labels: ["Initial Amount", "Amount Earned"],
     datasets: [
@@ -60,7 +67,7 @@ const Dashboard = () => {
         label: "TOTAL AMOUNT",
         backgroundColor: ["tomato"],
         hoverBackgroundColor: ["rgb(197, 72, 49)"],
-        data: [0, 4000],
+        data: [0, totalAmount],
       },
     ],
   };
@@ -86,7 +93,7 @@ const Dashboard = () => {
           <div>
             <p>
               Total Amount <br />
-              {/* ₹{totalAmount} */}
+              ₹{totalAmount}
             </p>
           </div>
           <div className="dashboardSummaryBox2">

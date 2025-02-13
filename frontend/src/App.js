@@ -31,6 +31,7 @@ import OrderList from "./components/admin/OrderList.js";
 import ProcessOrder from "./components/admin/ProcessOrder.js";
 import UserList from "./components/admin/UserList.js";
 import UpdateUser from "./components/admin/UpdateUser.js";
+import ProductReviews from "./components/admin/ProductReviews.js";
 
 function App() {
   const dispatch = useDispatch();
@@ -55,6 +56,8 @@ function App() {
     dispatch(loadUser());
     getStripeApiKey()
   }, [dispatch]);
+
+  window.addEventListener("contextmenu", (e) => e.preventDefault())
   return (
     <div className="App">
       <Header />
@@ -98,6 +101,7 @@ function App() {
           <Route path="/admin/order/:id" element={<ProcessOrder />} />
           <Route path="/admin/users" element={<UserList />} />
           <Route path="/admin/user/:id" element={<UpdateUser />} />
+          <Route path="/admin/reviews" element={<ProductReviews />} />
 
       </Routes>
       <Footer />

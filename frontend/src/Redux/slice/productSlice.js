@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   createProduct,
+  deleteReview,
   getAdminProduct,
+  getAllReviews,
   getProductDetails,
   getProducts,
   newReview,
@@ -119,6 +121,54 @@ export const newReviewSlice = createSlice({
         state.error = null;
       })
       .addCase(newReview.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+  },
+});
+
+
+
+export const productReviewSlice = createSlice({
+  name: "reviews",
+  initialState: {
+    reviews: [],
+    loading: false,
+    error: null,
+    isDeleted: false,
+  },
+  reducers: {
+    clearErrors: (state) => {
+      state.error = null;
+    },
+    resetDelete: (state) => {
+      state.isDeleted = false;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      // Get All Reviews
+      .addCase(getAllReviews.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getAllReviews.fulfilled, (state, action) => {
+        state.loading = false;
+        state.reviews = action.payload;
+      })
+      .addCase(getAllReviews.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // Delete Review
+      .addCase(deleteReview.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteReview.fulfilled, (state) => {
+        state.loading = false;
+        state.isDeleted = true;
+      })
+      .addCase(deleteReview.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

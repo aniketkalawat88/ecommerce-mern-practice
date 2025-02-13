@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import productSlice, { newProductSlice, newReviewSlice, productDetailSlice } from "./slice/productSlice";
+import productSlice, { newProductSlice, newReviewSlice, productDetailSlice, productReviewSlice } from "./slice/productSlice";
 import { allUserSlice, getUserSlice, userSlice } from "./slice/userSlice";
 import { forgotPasswordSlice, profileSlice } from "./slice/profileSlice";
 import { persistReducer } from "redux-persist";
@@ -27,6 +27,7 @@ const rootReducer = combineReducers({
     order: orderSlice.reducer,
     allUsers:allUserSlice.reducer,
     getUser:getUserSlice.reducer,
+    reviews:productReviewSlice.reducer
     
   })
 

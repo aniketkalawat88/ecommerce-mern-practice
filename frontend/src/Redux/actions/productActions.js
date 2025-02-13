@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 // export const getProducts = createAsyncThunk("getProducts" , async ( args , {rejectWithValue}) => {
 //     const response = await fetch("http://localhost:4000/api/v1/products")
@@ -133,3 +134,32 @@ export const newReview = createAsyncThunk("newReview" , async ( {rating, comment
         return rejectWithValue(error)
     }
 })
+
+export const getAllReviews = createAsyncThunk(
+    "reviews/getAll",
+    async (id, { rejectWithValue }) => {
+      try {
+        const { data } = await axios.get(`http://localhost:4000/api/v1/reviews?id=${id}`);
+        console.log(data,"dfghjk")
+        return data.reviews;
+      } catch (error) {
+        return rejectWithValue(error.response.data.message);
+      }
+    }
+  );
+  
+  // Delete Review of a Product
+  export const deleteReview = createAsyncThunk(
+    "reviews/delete",
+    async ({ reviewId, productId }, { rejectWithValue }) => {
+      try {
+        const { data } = await axios.delete(
+          `http://localhost:4000/api/v1/reviews?id=${reviewId}&productId=${productId}`
+        );
+        // console.log(data,"dfghj")
+        return data.success;
+      } catch (error) {
+        return rejectWithValue(error.response.data.message);
+      }
+    }
+  );
